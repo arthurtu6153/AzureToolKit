@@ -14,15 +14,13 @@
 
 <div class="weblink">
   <div *ngFor="let weblink of allWeblinks">
-    <span class="badge"><a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a><button (click)="onSelect(weblink)">Edit</button></span>
+    <span class="badge">{{weblink.id}}<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a><button (click)="onSelect(weblink)">Edit</button></span>
   </div>
-
-
-<div id="edit-link-panel" *ngIf="selectWeblink">
-  <label>Description:<input [(ngModel)]="selectWeblink.description"/> </label>
-  <label>Url:<input [(ngModel)]="selectWeblink.url"/> </label>
-  <button (click)="cancelSelect()">Cancel</button>
 </div>
+ 
+<app-weblink-detail [weblink]="selectedWeblink"></app-weblink-detail>
 
-</div>
 
+<br>
+<br>
+<br>

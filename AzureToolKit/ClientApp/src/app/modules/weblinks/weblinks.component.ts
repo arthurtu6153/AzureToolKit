@@ -1,5 +1,6 @@
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, Inject } from '@angular/core';
 import { Weblink } from './weblink';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-weblinks',
@@ -14,26 +15,35 @@ export class WeblinksComponent implements OnInit {
      url: "https://commissions.preferredhomecare.com/Commission/"
   };
 
-  selectWeblink: Weblink;
-  allWeblinks: Weblink[]=[
+  selectedWeblink: Weblink;
+  allWeblinks: Weblink[];
+  /*  
+  =[
     {id:1, description:"Commissions", url:"https://commissions.preferredhomecare.com/Commission/"},
     {id:1, description:"Concen Tracker", url:"https://concerntracker.preferredhomecare.com/Concern/Dashboard/"},
     {id:1, description:"Global Patient Search", url:"https://apps.preferredhomecare.com/apps/GPS/"},
     {id:1, description:"Branch Order", url:"https://my.phc.com/BranchOrder/"},
     {id:1, description:"ADP Portal", url:"https://workforcenow.adp.com/public/index.htm"},
     {id:1, description:"CrossWalks", url:"https://my.phc.com/CrossWalks/"},
-  ];
-  constructor() { }
+  ];*/
+
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<Weblink[]>(baseUrl + 'api/Weblinks/').subscribe(result => {
+      this.allWeblinks = result;
+    }, error => console.error(error));
+  }
+
 
   ngOnInit() {
   }
 
   onSelect(weblink: Weblink){
-    this.selectWeblink = weblink;
+    this.selectedWeblink = weblink;
+    console.log(this.selectedWeblink);
   }
 
   cancelSelect(){
-    this.selectWeblink = null;
+    this.selectedWeblink = null;
     this.editPanel.nativeElement.display ='none';
   }
 }

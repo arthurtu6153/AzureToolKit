@@ -1,0 +1,8 @@
+
+
+<div *ngIf="weblink">
+  <label>Description:<input [(ngModel)]="weblink.description"/> </label>
+  <label>Url:<input [(ngModel)]="weblink.url"/> </label>
+  <button (click)="Update()">Update</button>
+  <button (click)="Cancel()">Cancel</button>
+</div>
