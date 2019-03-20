@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { DateService } from './common/services/date.service';
+import { WeblinksModule } from './modules/weblinks/weblinks.module';
 
 @NgModule({
   declarations: [
@@ -23,13 +23,14 @@ import { DateService } from './common/services/date.service';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    WeblinksModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [DateService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

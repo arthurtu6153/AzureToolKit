@@ -1,0 +1,28 @@
+
+<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a>
+<div>
+  <label>Description:<input [(ngModel)]="weblink.description"/> </label>
+  <label>Url:<input [(ngModel)]="weblink.url"/> </label>
+</div>
+
+<h2>Web Utilities</h2>
+<ul class="weblink">
+  <li *ngFor="let weblink of allWeblinks">
+    <span class="badge"><a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a></span>
+  </li>
+</ul>
+
+<div class="weblink">
+  <div *ngFor="let weblink of allWeblinks">
+    <span class="badge"><a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a><button (click)="onSelect(weblink)">Edit</button></span>
+  </div>
+
+
+<div id="edit-link-panel" *ngIf="selectWeblink">
+  <label>Description:<input [(ngModel)]="selectWeblink.description"/> </label>
+  <label>Url:<input [(ngModel)]="selectWeblink.url"/> </label>
+  <button (click)="cancelSelect()">Cancel</button>
+</div>
+
+</div>
+
