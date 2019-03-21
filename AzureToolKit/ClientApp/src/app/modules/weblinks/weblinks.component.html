@@ -14,7 +14,10 @@
 
 <div class="weblink">
   <div *ngFor="let weblink of allWeblinks">
-    <span class="badge">{{weblink.id}}<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a><button (click)="onSelect(weblink)">Edit</button></span>
+    <span class="badge">{{weblink.id}}<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a>
+      <button (click)="onSelect(weblink)">Edit</button>
+      <button class="delete" title="delete link" (click)="delete(weblink)">x</button>
+    </span>
   </div>
 </div>
  

@@ -1,6 +1,8 @@
 import { Component, OnInit,ViewChild, ElementRef, Inject } from '@angular/core';
 import { Weblink } from './weblink';
 import { HttpClient } from '@angular/common/http';
+import { WeblinksService } from './weblinks.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-weblinks',
@@ -27,16 +29,37 @@ export class WeblinksComponent implements OnInit {
     {id:1, description:"CrossWalks", url:"https://my.phc.com/CrossWalks/"},
   ];*/
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Weblink[]>(baseUrl + 'api/Weblinks/').subscribe(result => {
-      this.allWeblinks = result;
-    }, error => console.error(error));
+  // constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  //   http.get<Weblink[]>(baseUrl + 'api/Weblinks/').subscribe(result => {
+  //     this.allWeblinks = result;
+  //   }, error => console.error(error));
+  // }
+  errorReceived: boolean;
+  constructor(private weblinksService: WeblinksService){
+    weblinksService.getWeblinks().subscribe();
   }
 
+  private handleError(error: any){
+    this.errorReceived = true;
+    return Observable.throw(error);
+  }
 
   ngOnInit() {
+    this.getWeblinks();
   }
 
+  getWeblinks(){
+    this.weblinksService.getWeblinks()      
+      .subscribe(weblinks => {
+        this.allWeblinks = weblinks;
+        console.log("fetch weblinks");
+      });
+  }
+
+  delete(weblink: Weblink){
+    this.weblinksService.deleteWeblink(weblink);
+    console.log("delete weblink " + weblink);
+  }
   onSelect(weblink: Weblink){
     this.selectedWeblink = weblink;
     console.log(this.selectedWeblink);
