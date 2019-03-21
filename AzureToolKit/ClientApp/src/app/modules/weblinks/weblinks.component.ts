@@ -57,7 +57,8 @@ export class WeblinksComponent implements OnInit {
   }
 
   delete(weblink: Weblink){
-    this.weblinksService.deleteWeblink(weblink);
+    this.weblinksService.deleteWeblink(weblink).subscribe();
+    this.getWeblinks();
     console.log("delete weblink " + weblink);
   }
   onSelect(weblink: Weblink){
