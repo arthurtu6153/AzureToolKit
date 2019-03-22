@@ -1,29 +1,30 @@
 
-<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a>
-<div>
-  <label>Description:<input [(ngModel)]="weblink.description"/> </label>
-  <label>Url:<input [(ngModel)]="weblink.url"/> </label>
-</div>
+
 
 <h2>Web Utilities</h2>
-<ul class="weblink">
-  <li *ngFor="let weblink of allWeblinks">
-    <span class="badge"><a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a></span>
-  </li>
-</ul>
+
+<button (click)="clickNew()">New</button>
+<div *ngIf="isNewClicked">
+  <app-weblink-detail [weblink]="creatNew()"></app-weblink-detail>
+</div>
+
 
 <div class="weblink">
   <div *ngFor="let weblink of allWeblinks">
-    <span class="badge">{{weblink.id}}<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a>
-      <button (click)="onSelect(weblink)">Edit</button>
+    <div class="badge">{{weblink.id}}<a href= "{{weblink.url}}" target="_blank">{{weblink.description}}</a>
+      <button (click)="onSelect(weblink)">Edit</button> 
+
+      <!-- <a routerLink="/detail/{{weblink.id}}"><span>Edit</span></a> -->
       <button class="delete" title="delete link" (click)="delete(weblink)">x</button>
-    </span>
+      <div *ngIf="weblink===selectedWeblink">
+        <app-weblink-detail [weblink]="selectedWeblink"></app-weblink-detail>
+      </div>
+    </div>
   </div>
 </div>
  
-<app-weblink-detail [weblink]="selectedWeblink"></app-weblink-detail>
+
+
+<!-- <router-outlet></router-outlet> -->
 
 <app-messages></app-messages>
-<br>
-<br>
-<br>

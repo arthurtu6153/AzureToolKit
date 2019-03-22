@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { WeblinkDetailComponent } from './weblink-detail/weblink-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ShareModule } from 'src/app/share/share.module';
+import { WeblinkRoutingModule } from './weblink-routing.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { ShareModule } from 'src/app/share/share.module';
     CommonModule,
     HttpClientModule,
     ShareModule,
+    WeblinkRoutingModule,
   ],
   exports: [WeblinksComponent, WeblinkDetailComponent],
   declarations: [WeblinksComponent, WeblinkDetailComponent]

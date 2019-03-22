@@ -3,6 +3,10 @@
 <div *ngIf="weblink">
   <label>Description:<input [(ngModel)]="weblink.description"/> </label>
   <label>Url:<input [(ngModel)]="weblink.url"/> </label>
-  <button (click)="Update()">Update</button>
+  <div *ngIf="weblink.id===0; then updateWeblink; else newWeblink"></div>
+  <ng-template #updateWeblink>
+    <button (click)="Update()">Update</button></ng-template>
+  <ng-template #newWeblink>
+    <button (click)="AddNew()">Save</button></ng-template>
   <button (click)="Cancel()">Cancel</button>
 </div>

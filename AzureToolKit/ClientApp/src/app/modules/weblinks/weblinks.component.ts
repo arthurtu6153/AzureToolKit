@@ -17,6 +17,7 @@ export class WeblinksComponent implements OnInit {
      url: "https://commissions.preferredhomecare.com/Commission/"
   };
 
+  isNewClicked: boolean = false;
   selectedWeblink: Weblink;
   allWeblinks: Weblink[];
   /*  
@@ -56,6 +57,14 @@ export class WeblinksComponent implements OnInit {
       });
   }
 
+  clickNew(){
+    this.isNewClicked = true;
+  }
+  creatNew(): Weblink{
+    var w = new Weblink();
+    w.description = "RRRRR";
+    return w;
+  }
   delete(weblink: Weblink){
     this.weblinksService.deleteWeblink(weblink).subscribe();
     this.getWeblinks();
