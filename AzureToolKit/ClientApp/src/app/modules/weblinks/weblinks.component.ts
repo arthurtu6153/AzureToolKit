@@ -1,15 +1,20 @@
-import { Component, OnInit,ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { Weblink } from './weblink';
 import { HttpClient } from '@angular/common/http';
 import { WeblinksService } from './weblinks.service';
 import { Observable } from 'rxjs';
+import { EventQueueService } from 'src/app/share/services/event-queue.service';
+import { WeblinkNotice } from './weblinkNotice';
 
 @Component({
   selector: 'app-weblinks',
   templateUrl: './weblinks.component.html',
   styleUrls: ['./weblinks.component.css']
 })
-export class WeblinksComponent implements OnInit {
+export class WeblinksComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
+  }
   @ViewChild('edit-link-panel') editPanel: ElementRef;
   weblink: Weblink = { 
      id:1,
@@ -36,8 +41,13 @@ export class WeblinksComponent implements OnInit {
   //   }, error => console.error(error));
   // }
   errorReceived: boolean;
-  constructor(private weblinksService: WeblinksService){
+  constructor(private weblinksService: WeblinksService, private eventQueue:EventQueueService<WeblinkNotice>){
     weblinksService.getWeblinks().subscribe();
+    eventQueue.subscribe().subscribe(notice=>{
+      this.isNewClicked = false;
+      this.selectedWeblink = null;
+      this.getWeblinks();
+    })
   }
 
   private handleError(error: any){
@@ -75,8 +85,8 @@ export class WeblinksComponent implements OnInit {
     console.log(this.selectedWeblink);
   }
 
-  cancelSelect(){
-    this.selectedWeblink = null;
-    this.editPanel.nativeElement.display ='none';
-  }
+  // cancelSelect(){
+  //   this.selectedWeblink = null;
+  //   this.editPanel.nativeElement.display ='none';
+  // }
 }
