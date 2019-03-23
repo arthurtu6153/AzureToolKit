@@ -14,6 +14,7 @@ import { WeblinkNotice } from '../weblinkNotice';
 export class WeblinkDetailComponent implements OnInit {
 
   @Input() weblink: Weblink;
+  @Input() isCreateNew: boolean;
   private notice: WeblinkNotice;
   constructor(private route: ActivatedRoute, private eventQueue: EventQueueService<WeblinkNotice>, public weblinksService: WeblinksService) { }
 
@@ -23,10 +24,7 @@ export class WeblinkDetailComponent implements OnInit {
     console.log(this.weblink);
   }
 
-  // private getWeblink(): void{
-  //   const id = parseFloat(this.route.snapshot.paramMap.get('id'));
-  //   this.weblinksService.getWeblink(id).subscribe(weblink=> this.weblink = weblink);
-  // }
+
   Update (){
     this.weblinksService.updateWeblink(this.weblink).subscribe(_=>{
       this.weblink=null;
@@ -39,12 +37,14 @@ export class WeblinkDetailComponent implements OnInit {
     console.log("add description = " + this.weblink.description);
     this.weblinksService.addWeblink(this.weblink).subscribe(_=>{
       this.weblink=null;
+      this.isCreateNew = false;
       this.notice = WeblinkNotice.WeblinkAdded;
       this.eventQueue.publish(this.notice);
     });
   }
   Cancel() {
     this.weblink = null;
+    this.isCreateNew = false;
     this.notice = WeblinkNotice.ActionCanceled;
     this.eventQueue.publish(this.notice);
   }

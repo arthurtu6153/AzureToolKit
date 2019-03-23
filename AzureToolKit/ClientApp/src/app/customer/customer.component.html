@@ -1,0 +1,48 @@
+<div [hidden]="submitted">
+    <h2>Customer Form</h2>
+    <form  (ngSubmit)="onSubmit()" #customerForm="ngForm">
+  
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" 
+               required
+               [(ngModel)]="customer.name" name="name" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+            Name is required
+        </div>
+  
+      </div>
+  
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="text" class="form-control" id="age"
+                [(ngModel)]="customer.age" name="age">
+      </div>
+  
+      <div class="form-group">
+        <label for="nationality">Nationality</label>
+        <select class="form-control" id="nationality" 
+                required
+                [(ngModel)]="customer.nationality" name="nationality" #nationality="ngModel">
+          <option *ngFor="let nationality of nationalities" [value]="nationality">{{nationality}}</option>
+        </select>
+        <div [hidden]="nationality.valid || nationality.pristine" class="alert alert-danger">
+            Nationality is required
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="!customerForm.form.valid">Submit</button>
+    </form>
+  </div>
+  
+  <div [hidden]="!submitted">
+      <h2>Submitted Customer</h2>
+      <hr>
+      <div><span class="badge badge-info">Id</span> -> {{customer.id}}</div>
+      <div><span class="badge badge-info">Name</span> -> {{customer.name}}</div>
+      <div><span class="badge badge-info">Age</span> -> {{customer.age}}</div>
+      <div><span class="badge badge-info">Nationality</span> -> {{customer.nationality}}</div>
+      <br>
+      <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>

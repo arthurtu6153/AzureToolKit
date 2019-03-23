@@ -56,8 +56,9 @@ export class WeblinksService{
             );
     }
 
-    getWeblinks(): Observable<Weblink[]>{
-        return this.http.get<Weblink[]>(this.weblinkUrl)
+    getWeblinks(department: number=0, weblinkType: number): Observable<Weblink[]>{
+        const url = this.weblinkUrl + `?department=${department}&weblinktype=${weblinkType}`;
+        return this.http.get<Weblink[]>(url)
         .pipe(
             tap(_=>this.log('fetched weblinks')),
             catchError(this.handleError<Weblink[]>('getWeblinks', []))

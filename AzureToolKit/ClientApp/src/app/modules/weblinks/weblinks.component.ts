@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild, ElementRef, Inject, OnDestroy } from '@ang
 import { Weblink } from './weblink';
 import { HttpClient } from '@angular/common/http';
 import { WeblinksService } from './weblinks.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EventQueueService } from 'src/app/share/services/event-queue.service';
 import { WeblinkNotice } from './weblinkNotice';
 
@@ -12,41 +12,20 @@ import { WeblinkNotice } from './weblinkNotice';
   styleUrls: ['./weblinks.component.css']
 })
 export class WeblinksComponent implements OnInit, OnDestroy {
-  ngOnDestroy(): void {
-    throw new Error("Method not implemented.");
-  }
-  @ViewChild('edit-link-panel') editPanel: ElementRef;
-  weblink: Weblink = { 
-     id:1,
-     description: "Commissions",
-     url: "https://commissions.preferredhomecare.com/Commission/"
-  };
+
+  // @ViewChild('edit-link-panel') editPanel: ElementRef;
 
   isNewClicked: boolean = false;
   selectedWeblink: Weblink;
   allWeblinks: Weblink[];
-  /*  
-  =[
-    {id:1, description:"Commissions", url:"https://commissions.preferredhomecare.com/Commission/"},
-    {id:1, description:"Concen Tracker", url:"https://concerntracker.preferredhomecare.com/Concern/Dashboard/"},
-    {id:1, description:"Global Patient Search", url:"https://apps.preferredhomecare.com/apps/GPS/"},
-    {id:1, description:"Branch Order", url:"https://my.phc.com/BranchOrder/"},
-    {id:1, description:"ADP Portal", url:"https://workforcenow.adp.com/public/index.htm"},
-    {id:1, description:"CrossWalks", url:"https://my.phc.com/CrossWalks/"},
-  ];*/
-
-  // constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-  //   http.get<Weblink[]>(baseUrl + 'api/Weblinks/').subscribe(result => {
-  //     this.allWeblinks = result;
-  //   }, error => console.error(error));
-  // }
   errorReceived: boolean;
+  subscriptionWeblinkNotice: Subscription;
+  weblinkType: number =22;
+  department: number=34;
+
   constructor(private weblinksService: WeblinksService, private eventQueue:EventQueueService<WeblinkNotice>){
-    weblinksService.getWeblinks().subscribe();
-    eventQueue.subscribe().subscribe(notice=>{
-      this.isNewClicked = false;
-      this.selectedWeblink = null;
-      this.getWeblinks();
+    this.subscriptionWeblinkNotice = eventQueue.subscribe().subscribe(notice=>{
+      this.initialize();
     })
   }
 
@@ -55,12 +34,20 @@ export class WeblinksComponent implements OnInit, OnDestroy {
     return Observable.throw(error);
   }
 
-  ngOnInit() {
-    this.getWeblinks();
+  private initialize(){
+      this.isNewClicked = false;
+      this.selectedWeblink = null;
+      this.getWeblinks();
   }
 
+  ngOnInit() {
+    this.initialize();
+  }
+  ngOnDestroy(): void {
+    this.subscriptionWeblinkNotice.unsubscribe();
+  }
   getWeblinks(){
-    this.weblinksService.getWeblinks()      
+    this.weblinksService.getWeblinks(this.department, this.weblinkType)      
       .subscribe(weblinks => {
         this.allWeblinks = weblinks;
         console.log("fetch weblinks");
@@ -72,6 +59,7 @@ export class WeblinksComponent implements OnInit, OnDestroy {
   }
   creatNew(): Weblink{
     var w = new Weblink();
+    w.type = this.weblinkType;
     w.description = "RRRRR";
     return w;
   }
@@ -85,8 +73,4 @@ export class WeblinksComponent implements OnInit, OnDestroy {
     console.log(this.selectedWeblink);
   }
 
-  // cancelSelect(){
-  //   this.selectedWeblink = null;
-  //   this.editPanel.nativeElement.display ='none';
-  // }
 }

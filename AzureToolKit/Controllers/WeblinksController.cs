@@ -23,7 +23,7 @@ namespace AzureToolKit.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Weblink>), (int)HttpStatusCode.OK)]
 
-        public async Task<IActionResult> GetWeblinksAsync()
+        public async Task<IActionResult> GetWeblinksAsync([FromQuery] Weblink request)
         {
             await Task.Delay(0);
             return Ok(allWeblinks.ToList());            
@@ -86,7 +86,8 @@ namespace AzureToolKit.Controllers
             public string Description { get; set; }
             public int Id { get; set; }
             public string Url { get; set; }
-
+            public int Department {get;set;}
+            public int WeblinkType {get;set;}
         }
     }
 }
