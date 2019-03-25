@@ -13,15 +13,20 @@ import { WeblinkNotice } from '../weblinkNotice';
 })
 export class WeblinkDetailComponent implements OnInit {
 
-  @Input() weblink: Weblink;
+  // @Input() weblink: Weblink;
+  @Input() weblinkId: number;
+  weblink: Weblink;
   @Input() isCreateNew: boolean;
   private notice: WeblinkNotice;
   constructor(private route: ActivatedRoute, private eventQueue: EventQueueService<WeblinkNotice>, public weblinksService: WeblinksService) { }
 
   ngOnInit() {
     // this.getWeblink();
-    console.log("oninit");
-    console.log(this.weblink);
+    if (this.weblinkId == null)
+      this.weblink= new Weblink();
+    else{
+      this.weblinksService.getWeblink(this.weblinkId).subscribe(weblink=> this.weblink = weblink);
+    }
   }
 
 

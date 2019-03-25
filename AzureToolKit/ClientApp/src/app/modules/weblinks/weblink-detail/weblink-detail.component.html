@@ -1,11 +1,11 @@
 
 
 <form #weblinkForm="ngForm">
-  <!-- <div *ngIf="weblink"> -->
+  <div *ngIf="weblinkId>0 || isCreateNew">
     <label>Description: </label><input id="description" type="text" [(ngModel)]="weblink.description" name="description" #name="ngModel" />
     <label>Url: </label><input id="url" name="url" type="url" [(ngModel)]="weblink.url" #url="ngModel" />
 
-    <div *ngIf="weblink.id==0; then newWeblink; else updateWeblink"></div>
+    <div *ngIf="isCreateNew; then newWeblink; else updateWeblink"></div>
     <ng-template #updateWeblink>
       <button (click)="Update()">Update</button>
     </ng-template> 
@@ -13,6 +13,6 @@
       <button (click)="AddNew()">Save</button>
     </ng-template>
     <button (click)="Cancel()">Cancel</button>
-  <!-- </div> -->
+  </div>
 </form>
 <div>{{weblink | json}}</div>

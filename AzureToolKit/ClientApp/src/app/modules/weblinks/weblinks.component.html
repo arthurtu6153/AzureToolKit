@@ -4,9 +4,10 @@
 <h2>Weblinks</h2>
 
 <button (click)="clickNew()">New</button>
-<div *ngIf="isNewClicked">
-  <app-weblink-detail [weblink]="creatNew()"></app-weblink-detail>
-</div>
+{{isNewClicked}}
+<!-- <div *ngIf="isNewClicked"> -->
+  <app-weblink-detail [isCreateNew]="isNewClicked"></app-weblink-detail>
+<!-- </div> -->
 
 
 <div class="weblink">
@@ -17,7 +18,7 @@
       <!-- <a routerLink="/detail/{{weblink.id}}"><span>Edit</span></a> -->
       <button class="delete" title="delete link" (click)="delete(weblink)">x</button>
       <div *ngIf="weblink===selectedWeblink">
-        <app-weblink-detail [weblink]="selectedWeblink"></app-weblink-detail>
+        <app-weblink-detail [weblinkId]="selectedWeblink.id"></app-weblink-detail>
       </div>
     </div>
   </div>
