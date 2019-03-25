@@ -6,6 +6,7 @@ import { WeblinkDetailComponent } from './weblink-detail/weblink-detail.componen
 import { HttpClientModule } from '@angular/common/http';
 import { ShareModule } from 'src/app/share/share.module';
 import { WeblinkRoutingModule } from './weblink-routing.module';
+import { CustomerComponent } from 'src/app/customer/customer.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { WeblinkRoutingModule } from './weblink-routing.module';
     ShareModule,
     WeblinkRoutingModule,
   ],
-  exports: [WeblinksComponent, WeblinkDetailComponent],
-  declarations: [WeblinksComponent, WeblinkDetailComponent]
+  exports: [WeblinksComponent, WeblinkDetailComponent,CustomerComponent],
+  declarations: [WeblinksComponent, WeblinkDetailComponent,CustomerComponent]
 })
 export class WeblinksModule { }

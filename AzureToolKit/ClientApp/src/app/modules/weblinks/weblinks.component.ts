@@ -57,12 +57,7 @@ export class WeblinksComponent implements OnInit, OnDestroy {
   clickNew(){
     this.isNewClicked = true;
   }
-  creatNew(): Weblink{
-    var w = new Weblink();
-    w.type = this.weblinkType;
-    w.description = "RRRRR";
-    return w;
-  }
+
   delete(weblink: Weblink){
     this.weblinksService.deleteWeblink(weblink).subscribe();
     this.getWeblinks();

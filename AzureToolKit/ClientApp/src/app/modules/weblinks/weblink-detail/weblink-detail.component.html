@@ -6,13 +6,15 @@
     <label>Url: </label><input id="url" name="url" type="url" [(ngModel)]="weblink.url" #url="ngModel" />
 
     <div *ngIf="isCreateNew; then newWeblink; else updateWeblink"></div>
+    <ng-template #newWeblink>
+      <button (click)="AddNew()">Save</button>
+    </ng-template> 
     <ng-template #updateWeblink>
       <button (click)="Update()">Update</button>
     </ng-template> 
-    <ng-template #newWeblink>
-      <button (click)="AddNew()">Save</button>
-    </ng-template>
+
     <button (click)="Cancel()">Cancel</button>
   </div>
 </form>
 <div>{{weblink | json}}</div>
+
